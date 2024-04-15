@@ -20,15 +20,18 @@ Embed WebHook Mockup Beispiel:
      $ sudo apt-get install python3.6
    ```
   2.2. Stelle sicher, dass du Python 3 hast mit `$ python3 --version`.  
-  2.3. Unter [diesem Path](src/dff_api.py) solltest du das Skript finden können. Lade es herunter und tu es am besten in einer Directory namens "DailyFelineFacts" hinein.  
-  2.4. Lade das Skript einmal und lasse es eine .cfg und eine .log Datei erstellen.  
+  2.3. Unter [diesem Path](src/) solltest du zwei Skripte finden können. Lade sie herunter und tu es am besten in einer Directory namens "DailyFelineFacts" hinein.  
+  2.4. Lade das Setup Skript `dff_setup.py` einmal und lasse es eine .cfg und eine .log Datei erstellen. Wenn du schon welche hast, wird es diese nicht überschreiben!  
   2.5. Nun kannst du in einem Texteditor die Variabeln (wie deine API nach Wahl oder dein Discord Token) verändern (solltest du auch, da es sonst nicht gehen wird...)
 
 Manuell solltest du den Skript mit diesem Befehl laufen lassen können:
 ```bash
   $ python3 /home/DEIN_USERNAME/DailyFelineFacts/dff_api.py
 ```
-Wenn du schon in dem Folder bist, wo der Skript vorhanden ist, kannst du auch nur `$ python3 dff_api.py` verwenden.
+Wenn du schon in dem Folder bist, wo der Skript vorhanden ist, kannst du auch nur `$ python3 dff_api.py` verwenden.  
+
+> [!NOTE]  
+> Obwohl die Setup Datei nicht mehr gebraucht wird nach dem ersten Mal, müssen alle anderen drei Dateien in einem gemeinsamen Ordner bleiben! Der Ordner kann auch einen anderen Namen haben, wenn du etwas ausser Katzen Fakten nehmen möchtest.
 
 ### To-Do
 
@@ -40,6 +43,6 @@ Wenn du schon in dem Folder bist, wo der Skript vorhanden ist, kannst du auch nu
 - [x] Logge alle Resultate in einer LOG-Datei
 
 ###### optionale Kriterien
-- [x] Intergriere die Optionen in der CFG-Datei für Intervalle, Aesthetik, etc.
-- [ ] Zufälliges Katzen Bild inkludiert von der Seite [Cat As A Service](https://cataas.com/)
+- [x] Intergriere die Optionen in der CFG-Datei für Token, Aesthetik, etc.
+- [x] Zufälliges Katzen Bild inkludiert von der Seite [Cat As A Service](https://cataas.com/)
 - [x] Embed Nachricht Farbe und Text kann konfiguriert werden
