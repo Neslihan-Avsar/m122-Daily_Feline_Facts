@@ -9,13 +9,13 @@ Embed WebHook Mockup Beispiel:
 ### To-Do
 
 ###### obligatorische Kriterien
-- [ ] Verwende [catfact.ninja API](https://catfact.ninja/) um Katzenfakten zu erhalten.
+- [x] Verwende [catfact.ninja API](https://catfact.ninja/) um Katzenfakten zu erhalten.
 - [x] Erstelle einen Discord Server mit einem Kanal für Katzen Fakten und einen WebHook. [Link to Discord Server](https://discord.gg/GHsjrUvY2n)
-- [ ] Verarbeite die Rohdaten der Katzen Fakten
-- [ ] Verschicke es mittels dem Discord WebHook
-- [ ] Logge alle Resultate in einer LOG-Datei
+- [x] Verarbeite die Rohdaten der Katzen Fakten
+- [x] Verschicke es mittels dem Discord WebHook
+- [x] Logge alle Resultate in einer LOG-Datei
 
 ###### optionale Kriterien
-- [ ] Intergriere die Optionen in der CFG-Datei für Intervalle
+- [x] Intergriere die Optionen in der CFG-Datei für Intervalle
 - [ ] Zufälliges Katzen Bild inkludiert von der Seite [Cat As A Service](https://cataas.com/)
-- [ ] Embed Nachricht Farbe und Text kann konfiguriert werden
+- [x] Embed Nachricht Farbe und Text kann konfiguriert werden
