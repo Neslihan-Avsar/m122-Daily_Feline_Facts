@@ -41,6 +41,7 @@ Wenn du schon in dem Folder bist, wo der Skript vorhanden ist, kannst du auch nu
 - [x] Verarbeite die Rohdaten der Katzen Fakten
 - [x] Verschicke es mittels dem Discord WebHook
 - [x] Logge alle Resultate in einer LOG-Datei
+- [ ] Finde einen Weg, wie man das Skript automatisch laufen lassen kann.
 
 ###### optionale Kriterien
 - [x] Intergriere die Optionen in der CFG-Datei für Token, Aesthetik, etc.
