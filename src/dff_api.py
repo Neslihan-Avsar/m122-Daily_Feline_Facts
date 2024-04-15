@@ -4,50 +4,61 @@ import configparser
 import sys
 import re
 import math
+import os
 from datetime import datetime
 
 # DEBUG MACROS DEFAULT
 
-allowDebug = True
-allowWarning = True
-allowErrors = True
-allowLogging = True
+allowDebug = 'true'
+allowWarning = 'true'
+allowErrors = 'true'
+allowLogging = 'true'
 
 def debugLog(message):
-    if allowDebug:
+    if allowDebug == 'true':
         print("DEBUG: ", message)
 
 def warningLog(message):
-    if allowWarning:
+    if allowWarning == 'true':
         print("WARNING: ", message)
 
 def errorLog(message):
-    if allowErrors:
+    if allowErrors == 'true':
         print("ERROR: ", message)
 
 def exitSystem(exit_code):
     if allowLogging == 'true':
+        try:
+            assert os.path.exists("dff_logging.log")
+        except:
+            print("Logging file is missing, please run \'dff_setup.py\' to create a new one or move the file to the same directory.")
+            quit()
         timestamp = datetime.now().strftime("%d-%m-%Y, %H:%M:%S")
         log = open('dff_logging.log', 'a')
         log.write("\nTIMESTAMP: " + timestamp)
         log.write("\nCODE: " + str(exit_code) + "\n")
         log.close()
     quit()
-# 0 = success, 1 = general failiure, 2 = config failiure, 3 = get failiure, 4 = post failiure, 5 = log failiure
+# 0 = success, 1 = general failiure, 2 = config failiure, 3 = get failiure, 4 = post failiure, 5 = log failiure (theoretically)
 
 # CONFIG FILE AND VARIABLE SETUP
+
+try:
+    assert os.path.exists("dff_config.cfg")
+except:
+    print("Config file is missing, please run \'dff_setup.py\' to create a new one or move the file to the same directory.")
+    exitSystem(1)
 
 CONFIG = configparser.ConfigParser()
 
 CONFIG.read('dff_config.cfg')
-debugLog("config file was read")
 
 # DEBUG CONFIG
 
-allowDebug = CONFIG.get('DEV', 'allowDebugMessages')
-allowWarning = CONFIG.get('DEV', 'allowWarningMessages')
-allowErrors = CONFIG.get('DEV', 'allowErrorMessages')
-allowLogging = CONFIG.get('DEV', 'logProcess')
+allowDebug = CONFIG.get('DEV', 'allowdebugmessages')
+allowWarning = CONFIG.get('DEV', 'allowwarningmessages')
+allowErrors = CONFIG.get('DEV', 'allowerrormessages')
+allowLogging = CONFIG.get('DEV', 'logprocess')
 
 if allowDebug != 'true' and allowDebug != 'false' or allowWarning != 'true' and allowWarning != 'false' or allowErrors != 'true' and allowErrors != 'false':
     print("At least one of dff_config.cfg/DEV/* is neither \'true\' nor \'false\'.")
@@ -58,6 +69,7 @@ if allowLogging != 'true' and allowLogging != 'false':
     exitSystem(2)
 
 URL = CONFIG.get('API Website', 'url')
+_IMAGE = CONFIG.get('API Website', 'image')
 _TIMEOUT_API = CONFIG.get('API Website', 'timeout_api')
 JSON_PATH = CONFIG.get('API Website', 'json_path')
 STATUSCODE_API = CONFIG.get('API Website', 'display_statuscode_api')
@@ -78,6 +90,11 @@ elif re.search("^(https?\:\/\/){1}(.+)(\.[a-zA-Z]{2,3})(\/.+)$", URL) == False:
 else:
     debugLog("url is using https protocol and is a valid url.")
 
+if _IMAGE == "":
+    warningLog("dff_config/API Website/image is empty.")
+else:
+    IMAGE = _IMAGE
+
 if math.isnan(float(_TIMEOUT_API)):
     errorLog("dff_config.cfg/API Website/timeout_api is either empty or not a number.")
     exitSystem(2)
@@ -86,6 +103,10 @@ else:
 
 JSON = requests.get(URL, timeout=TIMEOUT_API)
 FACT = JSON.json().get(JSON_PATH)
+
+if str(JSON.status_code)[0]!= '2':
+    errorLog("get request was unsuccessful.")
+    exitSystem(3)
 
 if STATUSCODE_API == 'true':
     print('Status Code of the API GET Request: ', JSON.status_code)
@@ -111,9 +132,13 @@ if math.isnan(int(_COLOR)):
 else:
     COLOR = int(_COLOR)
 
-POST = {"content": CONTENT, "embeds": [{"description": FACT, "color": COLOR}], "attachments": []}
+POST = {"content": CONTENT, "embeds": [{"description": FACT, "color": COLOR, "image":{"url": IMAGE}}], "attachments": []}
 HEADER = {'Content-Type': 'application/json'}
 RESPONSE = requests.post(TOKEN, headers=HEADER, data=json.dumps(POST), timeout=TIMEOUT_WEBHOOK)
+
+if str(RESPONSE.status_code)[0]!= '2':
+    errorLog("post request was unsuccessful.")
+    exitSystem(4)
 
 if STATUSCODE_WEBHOOK == 'true':
     print('Status Code of the WebHook POST Request: ', RESPONSE.status_code)
