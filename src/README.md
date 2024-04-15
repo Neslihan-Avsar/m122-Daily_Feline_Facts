@@ -14,6 +14,7 @@ logprocess = true
 
 [API Website]
 url = INSERT API LINK
+image = INSERT API LINK
 timeout_api = 2.0
 json_path = INSERT PATH TO JSON
 display_statuscode_api = true
