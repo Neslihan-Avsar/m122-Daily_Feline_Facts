@@ -16,6 +16,6 @@ Embed WebHook Mockup Beispiel:
 - [x] Logge alle Resultate in einer LOG-Datei
 
 ###### optionale Kriterien
-- [x] Intergriere die Optionen in der CFG-Datei für Intervalle
+- [x] Intergriere die Optionen in der CFG-Datei für Intervalle, Aesthetik, etc.
 - [ ] Zufälliges Katzen Bild inkludiert von der Seite [Cat As A Service](https://cataas.com/)
 - [x] Embed Nachricht Farbe und Text kann konfiguriert werden
